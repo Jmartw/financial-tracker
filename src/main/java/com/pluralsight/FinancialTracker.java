@@ -111,6 +111,7 @@ public class FinancialTracker {
         System.out.println("Please enter amount");
         double amount = Double.parseDouble(scanner.nextLine())
 
+
         LocalDate date = LocalDate.parse(dateStr.split(" ")[0], DATE_FORMATTER);
         LocalTime time = LocalTime.parse(dateStr.split(" ")[1], TIME_FORMATTER);
     }
@@ -125,7 +126,17 @@ public class FinancialTracker {
         String date = scanner.nextLine();
         System.out.println("Please enter time (HH:mm:ss)");
         String time = scanner.nextLine();
-        System.out.println("Please enter ");
+        System.out.println("Please enter the descripton");
+        String description = scanner.nextLine();
+        System.out.println("Please enter the vendor");
+        String vendor = scanner.nextLine();
+        System.out.println("Please enter the payment amount (Must be positive) : $ ");
+        double payment = scanner.nextDouble();
+        scanner.nextLine()
+        if (payment < 0)
+            System.out.println("ERROR: Invalid Input ! Please try again! ");
+            System.out.println("\n Deposit amount ");
+
 
     }
 
