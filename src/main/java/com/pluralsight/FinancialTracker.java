@@ -68,6 +68,30 @@ public class FinancialTracker {
         // For example: 2023-04-29,13:45:00,Amazon,PAYMENT,29.99
         // After reading all the transactions, the file should be closed.
         // If any errors occur, an appropriate error message should be displayed.
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME));
+            String line ;
+
+             while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length == 5) {
+                    LocalDate date = LocalDate.parse(parts[0], DATE_FORMATTER);
+                    LocalTime time = LocalTime.parse(parts[1], TIME_FORMATTER);
+                    String description = parts[2]();
+                    String vendor = parts[3]();
+                    double amount = Double.parseDouble(parts[4]);
+                    Transaction transaction = new Transaction(date, time, description, vendor, amount);
+                    transactions.add(transaction);
+                }
+            }
+            reader.close();
+        }
+
+        } catch (Exception name) {
+            name.printStackTrace();
+        }
+
+
     }
 
     private static void addDeposit(Scanner scanner) {
@@ -76,6 +100,19 @@ public class FinancialTracker {
         // The amount should be a positive number.
         // After validating the input, a new `Deposit` object should be created with the entered values.
         // The new deposit should be added to the `transactions` ArrayList.
+        System.out.println("Please enter date (yyyy-MM-dd");
+        String date = scanner.nextLine();
+        System.out.println("Please enter time (HH:mm:ss)");
+        String time = scanner.nextLine();
+        System.out.println("Please enter the description");
+        String description = scanner.nextLine();
+        System.out.println("Please enter the name of vendor");
+        String vendor = scanner.nextLine();
+        System.out.println("Please enter amount");
+        double amount = Double.parseDouble(scanner.nextLine())
+
+        LocalDate date = LocalDate.parse(dateStr.split(" ")[0], DATE_FORMATTER);
+        LocalTime time = LocalTime.parse(dateStr.split(" ")[1], TIME_FORMATTER);
     }
 
     private static void addPayment(Scanner scanner) {
@@ -84,6 +121,12 @@ public class FinancialTracker {
         // The amount should be a positive number.
         // After validating the input, a new `Payment` object should be created with the entered values.
         // The new payment should be added to the `transactions` ArrayList.
+        System.out.println("Please enter date (yyyy-MM-dd");
+        String date = scanner.nextLine();
+        System.out.println("Please enter time (HH:mm:ss)");
+        String time = scanner.nextLine();
+        System.out.println("Please enter ");
+
     }
 
     private static void ledgerMenu(Scanner scanner) {
