@@ -1,0 +1,4 @@
+# Capstone 1 
+ This project is intended to show the user a set of transactions that have been made. This is significant because we use programs like this everyday like at an atm machine or on a mobile banking app. One special feature I believe that stands out on my project is the ability to search up a transaction by the date. I find the be beyond useful in real world scenarios. One future feature I would add on to this program would be the ability to dispute a transactions. Such as in a method of a fragulent charge. I would to thank my classmates for assisting me in the process of creating this. As well as our instructor Raymond for being able to help me with things I didn't comprehend well.
+ 
+![Capture.PNG](..%2F..%2F..%2FUsers%2FStudent%2FDesktop%2FCapture.PNG)
