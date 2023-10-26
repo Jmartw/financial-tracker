@@ -259,6 +259,7 @@ public class FinancialTracker {
 
             switch (input) {
                 case "1":
+                    filterTransactionsByDate (LocalDate.now().withDayOfMonth(1),LocalDate.now())
                     // Generate a report for all transactions within the current month,
                     // including the date, vendor, and amount for each transaction.
                     break;
@@ -266,25 +267,28 @@ public class FinancialTracker {
                 case "2":
                     // Generate a report for all transactions within the previous month,
                     // including the date, vendor, and amount for each transaction.
-                   filterTransactionByPreviousMonth
+                   filterTransactionByPreviousMonth (LocalDate.now().withDayOfMonth(1).minusMonths(1).withDayOfMonth(1), LocalDate.now().withDayOfMonth(1).minusDays(1))
                     break;
 
                 case "3":
                     // Generate a report for all transactions within the current year,
                     // including the date, vendor, and amount for each transaction.
-                  filterTransactionsByYear
+                  filterTransactionsByYear (LocalDate.now().withDayOfYear(1),LocalDate.now().withMonth(12).withDayOfMonth(31))
+
                     break;
 
 
                 case "4":
                     // Generate a report for all transactions within the previous year,
                     // including the date, vendor, and amount for each transaction.
-                   filterTransactionBypreviousYear
+                   filterTransactionBypreviousYear (LocalDate.now().withDayOfYear(1),LocalDate.now().withMonth(12).withDayOfMonth(31).minusYears(1))
                     break;
 
                 case "5":
+                    filterTransactionByVendor ()
                     // Prompt the user to enter a vendor name, then generate a report for all transactions
                     // with that vendor, including the date, vendor, and amount for each transaction.break;
+                    
                     break;
                 case "0":
                     running = false;
@@ -303,6 +307,10 @@ public class FinancialTracker {
         // Transactions that fall within the date range are printed to the console.
         // If no transactions fall within the date range, the method prints a message indicating that there are no results.
     }
+            System.out.println("report ");
+            for (Transaction transaction: transactions) {
+                if (transaction.getDate().isAfter(startDate.minusDays(1)) && transaction.getDate().isBefore(endDate.plusDays(1))) {
+                    System.out.println(transaction);
 
     private static void filterTransactionsByVendor(String vendor) {
         // This method filters the transactions by vendor and prints a report to the console.
@@ -310,5 +318,13 @@ public class FinancialTracker {
         // The method loops through the transactions list and checks each transaction's vendor name against the specified vendor name.
         // Transactions with a matching vendor name are printed to the console.
         // If no transactions match the specified vendor name, the method prints a message indicating that there are no results.
-    }
+    }   try {
+                        for (Transaction transaction : transactions) {
+                            if (transaction.getVendor().equalsIgnoreCase(vendor)) {
+                                System.out.println(transaction);
+
+
+                            }
+                        }
+                    } catch (Exception e) {
 }
