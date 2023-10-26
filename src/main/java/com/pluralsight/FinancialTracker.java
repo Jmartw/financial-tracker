@@ -68,24 +68,32 @@ public class FinancialTracker {
         // For example: 2023-04-29,13:45:00,Amazon,PAYMENT,29.99
         // After reading all the transactions, the file should be closed.
         // If any errors occur, an appropriate error message should be displayed.
+
+        ArrayList<Transaction> transactions = new ArrayList<>();
+
+        File file = new File(fileName) {
+            {
+            }
+        }
         try {
             BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME));
-            String line ;
+            String line;
 
-             while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
                 if (parts.length == 5) {
                     LocalDate date = LocalDate.parse(parts[0], DATE_FORMATTER);
                     LocalTime time = LocalTime.parse(parts[1], TIME_FORMATTER);
-                    String description = parts[2]();
-                    String vendor = parts[3]();
+                    String description = parts[2];
+                    String vendor = parts[3];
                     double amount = Double.parseDouble(parts[4]);
                     Transaction transaction = new Transaction(date, time, description, vendor, amount);
                     transactions.add(transaction);
                 }
             }
+
+
             reader.close();
-        }
 
         } catch (Exception name) {
             name.printStackTrace();
@@ -111,7 +119,7 @@ public class FinancialTracker {
         System.out.println("Please enter deposit amount");
         double deposit = scanner.nextDouble();
         scanner.nextLine();
-        if (payment < 0 )
+        if (deposit < 0)
             System.out.println("Error! Invalid input ! Please try again !");
         System.out.println("\n Deposit amount (enter a positive value) ");
 
@@ -123,7 +131,7 @@ public class FinancialTracker {
             transactions.add(newDeposit);
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
-            String outputLine = newDeposit.getDate() + "|" + newDeposit.getTime() + "|" + newDeposit.getDescription() + "|" + newDeposit.getAmount() + newDeposit.get
+            String outputLine = newDeposit.getDate() + "|" + newDeposit.getTime() + "|" + newDeposit.getDescription() + "|" + newDeposit.getVendor() + "|" + newDeposit.getAmount();
             writer.write("\n" + outputLine);
             writer.close();
         } catch (Exception e) {
@@ -141,16 +149,31 @@ public class FinancialTracker {
         String date = scanner.nextLine();
         System.out.println("Please enter time (HH:mm:ss)");
         String time = scanner.nextLine();
-        System.out.println("Please enter the descripton");
+        System.out.println("Please enter the description");
         String description = scanner.nextLine();
-        System.out.println("Please enter the vendor");
+        System.out.println("Please enter the name of vendor");
         String vendor = scanner.nextLine();
-        System.out.println("Please enter the payment amount (Must be positive) : $ ");
+        System.out.println("Please enter payment amount");
         double payment = scanner.nextDouble();
-        scanner.nextLine()
+        scanner.nextLine();
         if (payment < 0)
-            System.out.println("ERROR: Invalid Input ! Please try again! ");
-            System.out.println("\n Deposit amount (enter a positive value)");
+            System.out.println("Error! Invalid input ! Please try again !");
+        System.out.println("\n Payment amount (enter a negative value) ");
+
+        LocalDate formattedDate = LocalDate.parse(date, DATE_FORMATTER);
+        LocalTime formattedTime = LocalTime.parse(time, TIME_FORMATTER);
+
+        try {
+            Transaction newPayment = new Transaction(formattedDate, formattedTime, description, vendor, payment);
+            transactions.add(newPayment);
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
+            String outputLine = newPayment.getDate() + "|" + newPayment.getTime() + "|" + newPayment.getDescription() + "|" + newPayment.getVendor() + "|" + newPayment.getAmount();
+            writer.write("\n" + outputLine);
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("Error!");
+        }
 
 
     }
@@ -194,7 +217,7 @@ public class FinancialTracker {
         // This method should display a table of all transactions in the `transactions` ArrayList.
         // The table should have columns for date, time, vendor, type, and amount.
         System.out.println("Transactions");
-        for (int i = 0;i < transactions.size(); i++ ) {
+        for (int i = 0; i < transactions.size(); i++) {
             System.out.println(transactions.get(i));
         }
     }
@@ -203,9 +226,11 @@ public class FinancialTracker {
         // This method should display a table of all deposits in the `transactions` ArrayList.
         // The table should have columns for date, time, vendor, and amount.
         System.out.println("Deposits");
-        for (int i = 0;i < transactions.size(); i++ ) {
-            if (transactions.get(i))
-            System.out.println(transactions.get(i));
+        for (int i = 0; i < transactions.size(); i++) {
+            if (transactions.get(i).getAmount() > 0){
+                System.out.println(transactions.get(i));
+            }
+
         }
     }
 
@@ -213,7 +238,9 @@ public class FinancialTracker {
         // This method should display a table of all payments in the `transactions` ArrayList.
         // The table should have columns for date, time, vendor, and amount.
         System.out.println("Payments");
-        for (int i = 0;i <)
+        for (int i = 0; i < transactions.size(); i++) {
+            if (transactions.get(i).getAmount() < 0){
+                System.out.println(transactions.get(i));
     }
 
     private static void reportsMenu(Scanner scanner) {
@@ -234,19 +261,31 @@ public class FinancialTracker {
                 case "1":
                     // Generate a report for all transactions within the current month,
                     // including the date, vendor, and amount for each transaction.
+                    break;
+
                 case "2":
                     // Generate a report for all transactions within the previous month,
                     // including the date, vendor, and amount for each transaction.
+                   filterTransactionByPreviousMonth
+                    break;
+
                 case "3":
                     // Generate a report for all transactions within the current year,
                     // including the date, vendor, and amount for each transaction.
+                  filterTransactionsByYear
+                    break;
+
 
                 case "4":
                     // Generate a report for all transactions within the previous year,
                     // including the date, vendor, and amount for each transaction.
+                   filterTransactionBypreviousYear
+                    break;
+
                 case "5":
                     // Prompt the user to enter a vendor name, then generate a report for all transactions
-                    // with that vendor, including the date, vendor, and amount for each transaction.
+                    // with that vendor, including the date, vendor, and amount for each transaction.break;
+                    break;
                 case "0":
                     running = false;
                 default:
